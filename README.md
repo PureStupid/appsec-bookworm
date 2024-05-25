@@ -1,2 +1,3 @@
 # bookworm
-An online platform for managing book rentals.
+
+An online bookstore.
