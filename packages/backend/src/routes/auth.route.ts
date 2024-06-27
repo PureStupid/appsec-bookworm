@@ -2,8 +2,8 @@ import { Router } from "express";
 import AuthController from "@controllers/auth.controller";
 import { CreateUserDto } from "@dtos/users.dto";
 import { Routes } from "@interfaces/routes.interface";
-import authMiddleware from "@middlewares/auth.middleware";
 import validationMiddleware from "@middlewares/validation.middleware";
+import { UserRole } from "@/interfaces/users.interface";
 
 class AuthRoute implements Routes {
   public path = "/";
@@ -16,19 +16,52 @@ class AuthRoute implements Routes {
 
   private initializeRoutes() {
     this.router.post(
-      `${this.path}signup`,
+      `${this.path}signup-student`,
       validationMiddleware(CreateUserDto, "body"),
-      this.authController.signUp
+      (req, res, next) =>
+        this.authController.signUp(req, res, next, UserRole.STUDENT)
     );
     this.router.post(
-      `${this.path}login`,
+      `${this.path}signup-faculty`,
       validationMiddleware(CreateUserDto, "body"),
-      this.authController.logIn
+      (req, res, next) =>
+        this.authController.signUp(req, res, next, UserRole.FACULTY)
     );
     this.router.post(
-      `${this.path}logout`,
-      authMiddleware,
-      this.authController.logOut
+      `${this.path}signup-parent`,
+      validationMiddleware(CreateUserDto, "body"),
+      (req, res, next) =>
+        this.authController.signUp(req, res, next, UserRole.PARENT)
+    );
+    this.router.post(
+      `${this.path}signup-admin`,
+      validationMiddleware(CreateUserDto, "body"),
+      (req, res, next) =>
+        this.authController.signUp(req, res, next, UserRole.ADMIN)
+    );
+    this.router.post(
+      `${this.path}login-student`,
+      validationMiddleware(CreateUserDto, "body"),
+      (req, res, next) =>
+        this.authController.logIn(req, res, next, UserRole.STUDENT)
+    );
+    this.router.post(
+      `${this.path}login-faculty`,
+      validationMiddleware(CreateUserDto, "body"),
+      (req, res, next) =>
+        this.authController.logIn(req, res, next, UserRole.FACULTY)
+    );
+    this.router.post(
+      `${this.path}login-parent`,
+      validationMiddleware(CreateUserDto, "body"),
+      (req, res, next) =>
+        this.authController.logIn(req, res, next, UserRole.PARENT)
+    );
+    this.router.post(
+      `${this.path}login-admin`,
+      validationMiddleware(CreateUserDto, "body"),
+      (req, res, next) =>
+        this.authController.logIn(req, res, next, UserRole.ADMIN)
     );
   }
 }
