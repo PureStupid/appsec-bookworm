@@ -1,14 +1,23 @@
 import { UserRole } from "@/interfaces/users.interface";
 import { Transform } from "class-transformer";
-import { IsEmail, IsEnum, IsOptional, IsString } from "class-validator";
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from "class-validator";
 
 export class CreateUserDto {
+  @IsOptional()
   @IsString()
   public name: string;
 
-  @IsEmail()
+  @IsEmail({}, { message: "Invalid email format" })
+  @IsNotEmpty({ message: "Email address is required" })
   public email: string;
 
+  @IsNotEmpty({ message: "Password is required" })
   @IsString()
   public password: string;
 
