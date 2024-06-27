@@ -12,42 +12,35 @@ const authMiddleware = async (
   next: NextFunction
 ) => {
   try {
+    const authHeader = req.headers.authorization;
 
-    let Authorization = req.header("Authorization");
-    Authorization = Authorization.split(" ")[1];
-
-    if (Authorization) {
-      const secretKey: string = SECRET_KEY;
-      const verificationResponse = verify(
-        Authorization,
-        secretKey
-      ) as DataStoredInToken;
-      const userId = verificationResponse._id;
-      const findUser = await userModel.findById(userId);
-
-      if (findUser) {
-        req.user = findUser;
-        next();
-      } else {
-        next(new HttpException(401, "Wrong authentication token"));
-      }
-    } else {
-      next(new HttpException(404, "Authentication token missing"));
+    if (!authHeader) {
+      return next(new HttpException(404, "Authentication token missing"));
     }
+    const token = authHeader.split(" ")[1];
+    const verificationResponse = verify(token, SECRET_KEY) as DataStoredInToken;
+    const userId = verificationResponse._id;
+    const findUser = await userModel.findById(userId);
+
+    if (!findUser) {
+      return next(new HttpException(404, "User not found"));
+    }
+    req.user = findUser;
+    next();
   } catch (error) {
-    next(new HttpException(401, "Wrong authentication token"));
+    return next(new HttpException(401, "Wrong authentication token"));
   }
 };
 
 const checkUserRole =
   (role: string) =>
   async (
-    req: Request,
+    req: RequestWithUser,
     res: Response,
     next: NextFunction
   ): Promise<Response | void> => {
-    if (isEmpty(req.body)) throw new HttpException(400, "userData is empty");
-    const email = (req.body as unknown as { email: string }).email;
+    if (isEmpty(req.user)) next(new HttpException(400, "userData is empty"));
+    const email = (req.user as unknown as { email: string }).email;
     const findUser = await userModel.findOne({ email: email });
     const userRole = findUser?.role || "";
     !role.includes(userRole)

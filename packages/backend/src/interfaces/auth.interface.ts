@@ -1,8 +1,11 @@
-import { Request } from 'express';
-import { User } from '@interfaces/users.interface';
+import { Request } from "express";
+import { User } from "@interfaces/users.interface";
 
 export interface DataStoredInToken {
   _id: string;
+  username: string;
+  email: string;
+  role: string;
 }
 
 export interface TokenData {
