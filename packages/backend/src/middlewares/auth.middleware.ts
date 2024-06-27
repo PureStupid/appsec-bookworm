@@ -4,6 +4,7 @@ import { SECRET_KEY } from "@config";
 import { HttpException } from "@exceptions/HttpException";
 import { DataStoredInToken, RequestWithUser } from "@interfaces/auth.interface";
 import userModel from "@models/users.model";
+import { isEmpty } from "@/utils/util";
 
 const authMiddleware = async (
   req: RequestWithUser,
@@ -19,10 +20,10 @@ const authMiddleware = async (
 
     if (Authorization) {
       const secretKey: string = SECRET_KEY;
-      const verificationResponse = (await verify(
+      const verificationResponse = verify(
         Authorization,
         secretKey
-      )) as DataStoredInToken;
+      ) as DataStoredInToken;
       const userId = verificationResponse._id;
       const findUser = await userModel.findById(userId);
 
@@ -40,4 +41,26 @@ const authMiddleware = async (
   }
 };
 
+const checkUserRole =
+  (roles: string[]) =>
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | void> => {
+    if (isEmpty(req.body)) throw new HttpException(400, "userData is empty");
+    const email = (req.body as unknown as { email: string }).email;
+    const findUser = await userModel.findOne({ email: email });
+    const userRole = findUser?.role || "";
+    !roles.includes(userRole)
+      ? next(
+          new HttpException(
+            401,
+            "Sorry, you do not have access to this resource"
+          )
+        )
+      : next();
+  };
+
 export default authMiddleware;
+export { checkUserRole };
