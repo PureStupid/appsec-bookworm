@@ -12,11 +12,9 @@ const authMiddleware = async (
   next: NextFunction
 ) => {
   try {
-    const Authorization =
-      req.cookies["Authorization"] ||
-      (req.header("Authorization")
-        ? req.header("Authorization").split(" ")[1]
-        : null);
+
+    let Authorization = req.header("Authorization");
+    Authorization = Authorization.split(" ")[1];
 
     if (Authorization) {
       const secretKey: string = SECRET_KEY;
