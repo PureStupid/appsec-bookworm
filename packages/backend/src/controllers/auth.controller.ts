@@ -31,9 +31,9 @@ class AuthController {
   ) => {
     try {
       const userData: CreateUserDto = { ...req.body, role };
-      await this.authService.login(userData);
+      const user = await this.authService.login(userData);
 
-      res.status(200).json({ message: "login success" });
+      res.status(200).json({ message: "login success", token: user.token });
     } catch (error) {
       next(error);
     }

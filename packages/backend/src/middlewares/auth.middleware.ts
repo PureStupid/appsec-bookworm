@@ -15,7 +15,7 @@ const authMiddleware = async (
     const Authorization =
       req.cookies["Authorization"] ||
       (req.header("Authorization")
-        ? req.header("Authorization").split("Bearer ")[1]
+        ? req.header("Authorization").split(" ")[1]
         : null);
 
     if (Authorization) {
