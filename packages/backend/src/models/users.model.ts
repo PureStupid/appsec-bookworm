@@ -5,21 +5,22 @@ const userSchema: Schema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Name is required"],
     },
     email: {
       type: String,
       required: true,
+      lowercase: true,
+      trim: true,
       unique: true,
     },
     password: {
       type: String,
       required: true,
-      minlength: 6,
     },
     role: {
       type: String,
-      enum: Object.keys(UserRole),
+      enum: UserRole,
     },
   },
   { timestamps: true }
