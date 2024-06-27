@@ -7,8 +7,8 @@ export interface User {
 }
 
 export enum UserRole {
-  MEMBER = "member",
-  CONTENT_MANAGER = "content manager",
-  STORE_MANAGER = "store manager",
+  STUDENT = "student",
+  FACULTY = "faculty",
+  PARENT = "parent",
   ADMIN = "admin",
 }
