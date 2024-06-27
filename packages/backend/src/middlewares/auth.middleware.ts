@@ -42,7 +42,7 @@ const authMiddleware = async (
 };
 
 const checkUserRole =
-  (roles: string[]) =>
+  (role: string) =>
   async (
     req: Request,
     res: Response,
@@ -52,7 +52,7 @@ const checkUserRole =
     const email = (req.body as unknown as { email: string }).email;
     const findUser = await userModel.findOne({ email: email });
     const userRole = findUser?.role || "";
-    !roles.includes(userRole)
+    !role.includes(userRole)
       ? next(
           new HttpException(
             401,

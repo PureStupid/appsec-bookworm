@@ -16,7 +16,7 @@ class ProtectedRoute implements Routes {
     this.router.get(
       `${this.path}student-protected`,
       authMiddleware,
-      checkUserRole([UserRole.STUDENT]),
+      checkUserRole(UserRole.STUDENT),
       (req: Request, res: Response) => {
         return res.send("Student Protected Route");
       }
