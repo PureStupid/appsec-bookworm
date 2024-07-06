@@ -3,7 +3,7 @@ import { User } from "@interfaces/users.interface";
 
 export interface DataStoredInToken {
   _id: string;
-  username: string;
+  name: string;
   email: string;
   role: string;
 }

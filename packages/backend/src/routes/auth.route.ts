@@ -1,6 +1,6 @@
 import { Router } from "express";
 import AuthController from "@controllers/auth.controller";
-import { CreateUserDto } from "@dtos/users.dto";
+import { CreateUserDto, UserDto } from "@dtos/users.dto";
 import { Routes } from "@interfaces/routes.interface";
 import validationMiddleware from "@middlewares/validation.middleware";
 import { UserRole } from "@/interfaces/users.interface";
@@ -41,25 +41,25 @@ class AuthRoute implements Routes {
     );
     this.router.post(
       `${this.path}login-student`,
-      validationMiddleware(CreateUserDto, "body"),
+      validationMiddleware(UserDto, "body"),
       (req, res, next) =>
         this.authController.logIn(req, res, next, UserRole.STUDENT)
     );
     this.router.post(
       `${this.path}login-faculty`,
-      validationMiddleware(CreateUserDto, "body"),
+      validationMiddleware(UserDto, "body"),
       (req, res, next) =>
         this.authController.logIn(req, res, next, UserRole.FACULTY)
     );
     this.router.post(
       `${this.path}login-parent`,
-      validationMiddleware(CreateUserDto, "body"),
+      validationMiddleware(UserDto, "body"),
       (req, res, next) =>
         this.authController.logIn(req, res, next, UserRole.PARENT)
     );
     this.router.post(
       `${this.path}login-admin`,
-      validationMiddleware(CreateUserDto, "body"),
+      validationMiddleware(UserDto, "body"),
       (req, res, next) =>
         this.authController.logIn(req, res, next, UserRole.ADMIN)
     );

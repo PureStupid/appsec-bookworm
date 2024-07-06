@@ -1,7 +1,7 @@
 import { hash, compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { SECRET_KEY } from "@config";
-import { CreateUserDto } from "@dtos/users.dto";
+import { CreateUserDto, UserDto } from "@dtos/users.dto";
 import { HttpException } from "@exceptions/HttpException";
 import { DataStoredInToken, TokenData } from "@interfaces/auth.interface";
 import { User } from "@interfaces/users.interface";
@@ -11,7 +11,9 @@ import { isEmpty } from "@utils/util";
 class AuthService {
   public users = userModel;
 
-  public async signup(userData: CreateUserDto): Promise<User> {
+  public async signup(
+    userData: CreateUserDto
+  ): Promise<{ createUserData: User; token: TokenData }> {
     if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
 
     const findUser: User = await this.users.findOne({ email: userData.email });
@@ -27,19 +29,24 @@ class AuthService {
       password: hashedPassword,
     });
 
-    return createUserData;
+    const token = this.createToken(createUserData);
+
+    return { createUserData, token };
   }
 
   public async login(
-    userData: CreateUserDto
+    userData: UserDto
   ): Promise<{ findUser: User; token: TokenData }> {
     if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
 
-    const findUser: User = await this.users.findOne({ email: userData.email });
+    const findUser: User = await this.users.findOne({
+      email: userData.email,
+      role: userData.role,
+    });
     if (!findUser)
       throw new HttpException(
         409,
-        `This email ${userData.email} was not found`
+        `This email ${userData.email} was not found with this role`
       );
 
     const isPasswordMatching: boolean = await compare(
@@ -54,26 +61,10 @@ class AuthService {
     return { findUser, token };
   }
 
-  public async logout(userData: User): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
-
-    const findUser: User = await this.users.findOne({
-      email: userData.email,
-      password: userData.password,
-    });
-    if (!findUser)
-      throw new HttpException(
-        409,
-        `This email ${userData.email} was not found`
-      );
-
-    return findUser;
-  }
-
   public createToken(user: User): TokenData {
     const dataStoredInToken: DataStoredInToken = {
       _id: user._id,
-      username: user.username,
+      name: user.name,
       email: user.email,
       role: user.role,
     };

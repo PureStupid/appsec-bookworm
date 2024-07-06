@@ -1,11 +1,11 @@
-import { Request, Response, Router } from "express";
+import { Response, Router } from "express";
 import { Routes } from "@interfaces/routes.interface";
 import authMiddleware, { checkUserRole } from "@/middlewares/auth.middleware";
 import { UserRole } from "@/interfaces/users.interface";
+import { RequestWithUser } from "@/interfaces/auth.interface";
 
-// very simple routes to demonstrate the use of the auth middleware
-class ProtectedRoute implements Routes {
-  public path = "/";
+class StudentsRoute implements Routes {
+  public path = "/student";
   public router = Router();
 
   constructor() {
@@ -14,14 +14,14 @@ class ProtectedRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(
-      `${this.path}student-protected`,
+      `${this.path}`,
       authMiddleware,
       checkUserRole(UserRole.STUDENT),
-      (req: Request, res: Response) => {
-        return res.send("Student Protected Route");
+      (req: RequestWithUser, res: Response) => {
+        return res.send(`Hello ${req.user.name}`);
       }
     );
   }
 }
 
-export default ProtectedRoute;
+export default StudentsRoute;
