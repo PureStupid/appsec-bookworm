@@ -1,0 +1,89 @@
+.login-container,
+.signup-container {
+  background-color: var(--background-400);
+  content: "";
+  display: block;
+  padding: 5%;
+  border-top-right-radius: 15%;
+  border-bottom-left-radius: 15%;
+  width: 95%;
+  max-width: 600px;
+}
+
+.login-header,
+.signup-header {
+  font-weight: semibold;
+}
+
+.login-input,
+.signup-input {
+  margin: 10px 0 10px 0;
+  padding: 10px;
+  width: 100%;
+  border: 3px solid #fff;
+  border-radius: 5px;
+}
+
+.login-input:focus,
+.login-input:hover,
+.register-input:focus,
+.signup-input:hover {
+  outline: none;
+  box-shadow: none;
+  border: 3px solid var(--primary-900);
+}
+
+.list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  color: var(--text-100);
+  text-decoration: none;
+  list-style: none;
+}
+
+.link:hover {
+  color: var(--text-200);
+}
+
+.login-btn,
+.signup-btn {
+  background-color: var(--primary-500);
+  color: var(--text-100);
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+.login-btn:hover,
+.login-btn:focus,
+.login-btn:active,
+.login-btn:focus-visible,
+.login-btn:disabled,
+.signup-btn:hover,
+.signup-btn:focus,
+.signup-btn:active,
+.signup-btn:focus-visible,
+.signup-btn:disabled {
+  background-color: var(--primary-600) !important;
+  box-shadow: none !important;
+}
+
+.login-btn:disabled:hover,
+.signup-btn:disabled:hover,
+.login-btn:disabled,
+.signup-btn:disabled {
+  color: var(--text-200);
+  cursor: not-allowed !important;
+}
+
+.invalid-input {
+  border: 2px solid var(--accent-500);
+}
+
+.invalid-input-title {
+  color: var(--accent-500);
+}

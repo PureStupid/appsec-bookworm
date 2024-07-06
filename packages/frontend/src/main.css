@@ -1,0 +1,147 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --text-50: rgb(242, 242, 242);
+  --text-100: rgb(230, 230, 230);
+  --text-200: rgb(204, 204, 204);
+  --text-300: rgb(179, 179, 179);
+  --text-400: rgb(153, 153, 153);
+  --text-500: rgb(128, 128, 128);
+  --text-600: rgb(102, 102, 102);
+  --text-700: rgb(77, 77, 77);
+  --text-800: rgb(51, 51, 51);
+  --text-900: rgb(26, 26, 26);
+  --text-950: rgb(13, 13, 13);
+
+  --background-50: rgb(245, 242, 239);
+  --background-100: rgb(236, 228, 223);
+  --background-200: rgb(216, 201, 192);
+  --background-300: rgb(197, 174, 160);
+  --background-400: rgb(177, 147, 129);
+  --background-500: rgb(158, 120, 97);
+  --background-600: rgb(126, 96, 78);
+  --background-700: rgb(95, 72, 58);
+  --background-800: rgb(63, 48, 39);
+  --background-900: rgb(32, 24, 19);
+  --background-950: rgb(16, 12, 10);
+
+  --primary-50: rgb(244, 240, 240);
+  --primary-100: rgb(233, 226, 226);
+  --primary-200: rgb(212, 196, 196);
+  --primary-300: rgb(190, 167, 167);
+  --primary-400: rgb(168, 138, 138);
+  --primary-500: rgb(147, 108, 108);
+  --primary-600: rgb(117, 87, 87);
+  --primary-700: rgb(88, 65, 65);
+  --primary-800: rgb(59, 43, 43);
+  --primary-900: rgb(29, 22, 22);
+  --primary-950: rgb(15, 11, 11);
+
+  --secondary-50: rgb(245, 240, 240);
+  --secondary-100: rgb(235, 224, 224);
+  --secondary-200: rgb(215, 193, 193);
+  --secondary-300: rgb(195, 162, 162);
+  --secondary-400: rgb(174, 132, 132);
+  --secondary-500: rgb(154, 101, 101);
+  --secondary-600: rgb(123, 81, 81);
+  --secondary-700: rgb(93, 60, 60);
+  --secondary-800: rgb(62, 40, 40);
+  --secondary-900: rgb(31, 20, 20);
+  --secondary-950: rgb(15, 10, 10);
+
+  --accent-50: rgb(246, 239, 239);
+  --accent-100: rgb(236, 223, 223);
+  --accent-200: rgb(218, 190, 190);
+  --accent-300: rgb(199, 158, 158);
+  --accent-400: rgb(181, 125, 125);
+  --accent-500: rgb(162, 93, 93);
+  --accent-600: rgb(130, 74, 74);
+  --accent-700: rgb(97, 56, 56);
+  --accent-800: rgb(65, 37, 37);
+  --accent-900: rgb(32, 19, 19);
+  --accent-950: rgb(16, 9, 9);
+}
+:root[data-theme="dark"] {
+  --text-50: hsl(15, 15%, 5%);
+  --text-100: hsl(26, 14%, 10%);
+  --text-200: hsl(26, 14%, 20%);
+  --text-300: hsl(23, 14%, 30%);
+  --text-400: hsl(24, 14%, 40%);
+  --text-500: hsl(24, 14%, 50%);
+  --text-600: hsl(24, 14%, 60%);
+  --text-700: hsl(23, 14%, 70%);
+  --text-800: hsl(26, 14%, 80%);
+  --text-900: hsl(26, 14%, 90%);
+  --text-950: hsl(30, 15%, 95%);
+
+  --background-50: hsl(17, 54%, 5%);
+  --background-100: hsl(16, 53%, 10%);
+  --background-200: hsl(16, 55%, 20%);
+  --background-300: hsl(16, 54%, 30%);
+  --background-400: hsl(16, 54%, 40%);
+  --background-500: hsl(16, 54%, 50%);
+  --background-600: hsl(16, 54%, 60%);
+  --background-700: hsl(16, 54%, 70%);
+  --background-800: hsl(16, 55%, 80%);
+  --background-900: hsl(16, 53%, 90%);
+  --background-950: hsl(17, 54%, 95%);
+
+  --primary-50: hsl(15, 31%, 5%);
+  --primary-100: hsl(16, 29%, 10%);
+  --primary-200: hsl(17, 31%, 20%);
+  --primary-300: hsl(15, 31%, 30%);
+  --primary-400: hsl(16, 31%, 40%);
+  --primary-500: hsl(16, 31%, 50%);
+  --primary-600: hsl(16, 31%, 60%);
+  --primary-700: hsl(15, 31%, 70%);
+  --primary-800: hsl(17, 31%, 80%);
+  --primary-900: hsl(16, 29%, 90%);
+  --primary-950: hsl(15, 31%, 95%);
+
+  --secondary-50: hsl(12, 38%, 5%);
+  --secondary-100: hsl(17, 41%, 10%);
+  --secondary-200: hsl(16, 41%, 20%);
+  --secondary-300: hsl(16, 41%, 30%);
+  --secondary-400: hsl(16, 41%, 40%);
+  --secondary-500: hsl(16, 41%, 50%);
+  --secondary-600: hsl(16, 41%, 60%);
+  --secondary-700: hsl(16, 41%, 70%);
+  --secondary-800: hsl(16, 41%, 80%);
+  --secondary-900: hsl(17, 41%, 90%);
+  --secondary-950: hsl(18, 38%, 95%);
+
+  --accent-50: hsl(18, 52%, 5%);
+  --accent-100: hsl(16, 53%, 10%);
+  --accent-200: hsl(16, 51%, 20%);
+  --accent-300: hsl(16, 52%, 30%);
+  --accent-400: hsl(16, 51%, 40%);
+  --accent-500: hsl(16, 51%, 50%);
+  --accent-600: hsl(16, 51%, 60%);
+  --accent-700: hsl(16, 52%, 70%);
+  --accent-800: hsl(16, 51%, 80%);
+  --accent-900: hsl(16, 53%, 90%);
+  --accent-950: hsl(14, 52%, 95%);
+}
+
+html {
+  height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+body {
+  background-color: var(--background-200);
+  background-size: 10px 10px;
+  background-image: linear-gradient(
+      to right,
+      var(--background-100) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, var(--background-100) 1px, transparent 1px);
+  min-height: 100%;
+}
