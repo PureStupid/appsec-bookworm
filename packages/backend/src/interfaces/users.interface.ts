@@ -1,3 +1,5 @@
+import { UserRole } from "@shared/types/user.role";
+
 export interface User {
   [x: string]: string;
   name: string;
@@ -6,9 +8,9 @@ export interface User {
   role: UserRole;
 }
 
-export enum UserRole {
-  STUDENT = "student",
-  FACULTY = "faculty",
-  PARENT = "parent",
-  ADMIN = "admin",
+export interface PartialUser {
+  [x: string]: string;
+  name: string;
+  email: string;
+  role: UserRole;
 }

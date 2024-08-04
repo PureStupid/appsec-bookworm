@@ -3,9 +3,13 @@ import "./form.css";
 import { Link } from "react-router-dom";
 import { UserLoginBody, UserLoginErrorResponse } from "../../types/user.entity";
 import { FormEvent, useState } from "react";
-import { UserRole } from "../../types/user.role";
+import { UserRole } from "../../../../shared/types/user.role";
 import { useAuth } from "../../contexts/useAuth";
 import { login } from "../../services/authService";
+import axios from "axios";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const API_URL = import.meta.env.VITE_SITE_API_URL as string;
 
 export default function LoginForm() {
   const [formData, setFormData] = useState<UserLoginBody>({
@@ -13,6 +17,10 @@ export default function LoginForm() {
     password: "",
     role: UserRole.STUDENT,
   });
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const onRecaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
+  };
   const [errors, setErrors] = useState<string[]>([]);
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(false);
   const [submitText, setSubmitText] = useState<string>("Log In");
@@ -20,7 +28,7 @@ export default function LoginForm() {
 
   const auth = useAuth();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     setErrors([]);
@@ -28,16 +36,27 @@ export default function LoginForm() {
     setSubmitText("Logging in...");
     setProcessing(true);
 
+    const response = await axios.post(`${API_URL}/validate-recaptcha`, {
+      token: recaptchaToken,
+    });
+
+    if (response.data.message !== "reCAPTCHA success") {
+      setErrors([response.data.message]);
+      setRecaptchaToken(null);
+      setSubmitDisabled(false);
+      setProcessing(false);
+      setSubmitText("Log In");
+      return;
+    }
+
     login({
       email: formData.email,
       password: formData.password,
       role: formData.role,
     })
-      .then((response) => {
-        if (response.message === "login success") {
-          setSubmitText("Success");
-          auth.authenticate(formData);
-        }
+      .then(() => {
+        setSubmitText("Success");
+        auth.authenticate();
       })
       .catch(
         (error: {
@@ -60,6 +79,7 @@ export default function LoginForm() {
           } else {
             setErrors(["An error occurred. Please try again later."]);
           }
+          setRecaptchaToken(null);
           setSubmitDisabled(false);
         }
       );
@@ -95,26 +115,14 @@ export default function LoginForm() {
               setFormData({ ...formData, password: e.target.value })
             }
             type="password"
+            autoComplete="current-password"
             placeholder="Password"
           />
         </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Select your role</Form.Label>
-          <Form.Control
-            className="login-input"
-            id="login-role"
-            as="select"
-            value={formData.role}
-            onChange={(e) =>
-              setFormData({ ...formData, role: e.target.value as UserRole })
-            }
-          >
-            <option value={UserRole.STUDENT}>Student</option>
-            <option value={UserRole.FACULTY}>Faculty</option>
-            <option value={UserRole.PARENT}>Parent</option>
-            <option value={UserRole.ADMIN}>Admin</option>
-          </Form.Control>
-        </Form.Group>
+        <ReCAPTCHA
+          sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+          onChange={onRecaptchaChange}
+        />
         <ul className="list mb-3">
           <li>
             <Link to="/signup" className="link ms-1">
@@ -126,7 +134,8 @@ export default function LoginForm() {
           disabled={
             submitDisabled ||
             formData.password.length === 0 ||
-            formData.email.length === 0
+            formData.email.length === 0 ||
+            recaptchaToken === null
           }
           className="login-btn"
           type="submit"

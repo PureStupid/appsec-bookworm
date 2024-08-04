@@ -27,6 +27,17 @@ class UsersController {
     }
   };
 
+  public getUserByEmail = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userEmail: string = req.params.email;
+      const findOneUserData: User = await this.userService.findUserByEmail(userEmail);
+
+      res.status(200).json({ data: findOneUserData, message: 'findOne' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public createUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: CreateUserDto = req.body;

@@ -1594,6 +1594,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-google-recaptcha@npm:^2.1.9":
+  version: 2.1.9
+  resolution: "@types/react-google-recaptcha@npm:2.1.9"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10c0/12b1806ef4083524cf108fb7c83f7438feb5746e672af2589a2645de26d2ac1ed0f4b687a1e7d482f51a92a75850c074a8696396c1024a3f80e8902a780d4f95
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.4.6":
   version: 4.4.10
   resolution: "@types/react-transition-group@npm:4.4.10"
@@ -2268,6 +2277,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.7.3":
+  version: 1.7.3
+  resolution: "axios@npm:1.7.3"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10c0/a18cbe559203efa05fb1fec2d1898e23bf6329bd2575784ee32aa11b5bbe1d54b9f472c49a261294125519cf62aa4fe5ef6e647bb7482eafc15bffe15ab314ce
+  languageName: node
+  linkType: hard
+
 "backend@workspace:packages/backend":
   version: 0.0.0-use.local
   resolution: "backend@workspace:packages/backend"
@@ -2281,6 +2301,7 @@ __metadata:
     "@types/hpp": "npm:^0.2.6"
     "@types/jsonwebtoken": "npm:^9.0.6"
     "@types/node": "npm:^20.12.12"
+    axios: "npm:^1.7.3"
     bcrypt: "npm:^5.1.1"
     class-transformer: "npm:^0.5.1"
     class-validator: "npm:^0.14.1"
@@ -2290,6 +2311,7 @@ __metadata:
     envalid: "npm:^8.0.0"
     eslint: "npm:^8.56.0"
     express: "npm:^4.19.2"
+    express-rate-limit: "npm:^7.4.0"
     globals: "npm:^15.3.0"
     helmet: "npm:^7.1.0"
     hpp: "npm:^0.2.3"
@@ -3818,6 +3840,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"express-rate-limit@npm:^7.4.0":
+  version: 7.4.0
+  resolution: "express-rate-limit@npm:7.4.0"
+  peerDependencies:
+    express: 4 || 5 || ^5.0.0-beta.1
+  checksum: 10c0/f6ceb7278f8f0af2ad3a7d6a7e791d29cd278366e107aa98cc16e93b95c5b4e35b749bb2a24454d9d54069b204fa6c26a49075672b63341ad948339fe3d797d3
+  languageName: node
+  linkType: hard
+
 "express@npm:^4.19.2":
   version: 4.19.2
   resolution: "express@npm:4.19.2"
@@ -4128,6 +4159,7 @@ __metadata:
     "@types/jsonwebtoken": "npm:^9.0.6"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
+    "@types/react-google-recaptcha": "npm:^2.1.9"
     "@typescript-eslint/eslint-plugin": "npm:^7.13.1"
     "@typescript-eslint/parser": "npm:^7.13.1"
     "@vitejs/plugin-react-swc": "npm:^3.5.0"
@@ -4140,6 +4172,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-bootstrap: "npm:^2.10.4"
     react-dom: "npm:^18.3.1"
+    react-google-recaptcha: "npm:^3.1.0"
     react-router-dom: "npm:^6.24.1"
     typescript: "npm:^5.2.2"
     vite: "npm:^5.3.1"
@@ -4608,6 +4641,15 @@ __metadata:
   version: 7.1.0
   resolution: "helmet@npm:7.1.0"
   checksum: 10c0/8c3370d07487be11ac918577c68952e05d779a1a2c037023c1ba763034c381a025899bc52f8acfab5209304a1dc618a3764dbfd26386a0d1173befe4fb932e84
+  languageName: node
+  linkType: hard
+
+"hoist-non-react-statics@npm:^3.3.0":
+  version: 3.3.2
+  resolution: "hoist-non-react-statics@npm:3.3.2"
+  dependencies:
+    react-is: "npm:^16.7.0"
+  checksum: 10c0/fe0889169e845d738b59b64badf5e55fa3cf20454f9203d1eb088df322d49d4318df774828e789898dcb280e8a5521bb59b3203385662ca5e9218a6ca5820e74
   languageName: node
   linkType: hard
 
@@ -7300,7 +7342,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.0, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -7415,6 +7457,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-async-script@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "react-async-script@npm:1.2.0"
+  dependencies:
+    hoist-non-react-statics: "npm:^3.3.0"
+    prop-types: "npm:^15.5.0"
+  peerDependencies:
+    react: ">=16.4.1"
+  checksum: 10c0/89450912110c380abc08258ce17d2fb18d31d6b7179a74f6bc504c0761a4ca271edb671e402fa8e5ea4250b5c17fa953af80a9f1c4ebb26c9e81caee8476c903
+  languageName: node
+  linkType: hard
+
 "react-bootstrap@npm:^2.10.4":
   version: 2.10.4
   resolution: "react-bootstrap@npm:2.10.4"
@@ -7454,7 +7508,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^16.13.1, react-is@npm:^16.3.2":
+"react-google-recaptcha@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "react-google-recaptcha@npm:3.1.0"
+  dependencies:
+    prop-types: "npm:^15.5.0"
+    react-async-script: "npm:^1.2.0"
+  peerDependencies:
+    react: ">=16.4.1"
+  checksum: 10c0/5ecaa6b88f238defd939012cb2671b4cbda59fe03f059158994b8c5215db482412e905eae6a67d23cef220d77cfe0430ab91ce7849d476515cda72f3a8a0a746
+  languageName: node
+  linkType: hard
+
+"react-is@npm:^16.13.1, react-is@npm:^16.3.2, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 10c0/33977da7a5f1a287936a0c85639fec6ca74f4f15ef1e59a6bc20338fc73dc69555381e211f7a3529b8150a1f71e4225525b41b60b52965bda53ce7d47377ada1

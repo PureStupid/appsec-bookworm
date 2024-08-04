@@ -81,6 +81,7 @@
 }
 
 .invalid-input {
+  margin-top: 20px;
   border: 2px solid var(--accent-500);
 }
 

@@ -10,4 +10,5 @@ export const {
   DB_HOST,
   SECRET_KEY,
   ORIGIN,
+  RECAPTCHA_SECRET_KEY,
 } = process.env;

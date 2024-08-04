@@ -1,4 +1,4 @@
-import { UserRole } from "@/interfaces/users.interface";
+import { UserRole } from "@shared/types/user.role";
 import { Transform } from "class-transformer";
 import {
   IsEmail,
@@ -6,6 +6,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Matches,
 } from "class-validator";
 
 export class CreateUserDto {
@@ -19,6 +20,13 @@ export class CreateUserDto {
 
   @IsNotEmpty({ message: "Password is required" })
   @IsString()
+  @Matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    {
+      message:
+        "Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character",
+    }
+  )
   public password: string;
 
   @IsOptional()
@@ -26,7 +34,6 @@ export class CreateUserDto {
   @IsEnum(UserRole)
   public role: UserRole;
 }
-
 export class UserDto {
   @IsString()
   @IsOptional()
@@ -38,6 +45,13 @@ export class UserDto {
 
   @IsNotEmpty({ message: "Password is required" })
   @IsString()
+  @Matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    {
+      message:
+        "Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character",
+    }
+  )
   public password: string;
 
   @IsOptional()

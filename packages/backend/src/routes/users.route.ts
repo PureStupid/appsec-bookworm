@@ -16,6 +16,7 @@ class UsersRoute implements Routes {
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.usersController.getUsers);
     this.router.get(`${this.path}/:id`, this.usersController.getUserById);
+    this.router.get(`${this.path}/:email`, this.usersController.getUserByEmail);
     this.router.post(
       `${this.path}`,
       validationMiddleware(CreateUserDto, "body"),

@@ -1,12 +1,11 @@
-import React, { createContext, useState, ReactNode } from "react";
-import { getCurrentUser, logout } from "../services/authService";
-import { UserLoginBody, UserSignUpBody } from "../types/user.entity";
+import React, { createContext, useState, ReactNode, useEffect } from "react";
+import { getValidUser, logout } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import { UserData } from "../types/user.entity";
 
 export interface AuthContextProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  user: any;
-  authenticate: (user: UserLoginBody | UserSignUpBody) => Promise<void>;
+  user: UserData | null;
+  authenticate: () => Promise<void>;
   logout: () => void;
 }
 
@@ -17,24 +16,38 @@ export const AuthContext = createContext<AuthContextProps | undefined>(
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState(getCurrentUser());
+  const [user, setUser] = useState<UserData | null>(null);
   const navigate = useNavigate();
 
-  const authenticate = async (user: UserLoginBody | UserSignUpBody) => {
-    localStorage.setItem("user", JSON.stringify(user));
+  useEffect(() => {
+    const fetchUser = async () => {
+      const validUser = await getValidUser();
+      setUser(validUser);
+    };
+
+    fetchUser();
+  }, []);
+
+  const authenticate = async () => {
+    const user = await getValidUser();
     setUser(user);
-    navigate(`/${user.role}`);
+    if (user.name !== "" && user.email !== "" && user.role !== "") {
+      navigate(`/${user.role}`, { replace: true });
+    } else {
+      navigate("/login", { replace: true });
+    }
   };
 
   const handleLogout = () => {
     logout();
-    setUser(null);
+    setUser({ name: "", email: "", role: "" } as UserData);
+    navigate("/login", { replace: true });
   };
 
   return (
     <AuthContext.Provider
       value={{
-        user,
+        user: user,
         authenticate: authenticate,
         logout: handleLogout,
       }}

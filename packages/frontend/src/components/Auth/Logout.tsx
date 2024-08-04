@@ -8,7 +8,7 @@ const Logout: React.FC = () => {
 
   const handleLogout = () => {
     auth.logout();
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   return <button onClick={handleLogout}>Logout</button>;

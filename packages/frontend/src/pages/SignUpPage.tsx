@@ -1,5 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import SignUpForm from "../components/Auth/SignUpForm";
+import React from "react";
 
 export default function SignUpScreen() {
   return (

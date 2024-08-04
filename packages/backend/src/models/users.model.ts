@@ -1,5 +1,6 @@
 import { model, Schema, Document } from "mongoose";
-import { User, UserRole } from "@interfaces/users.interface";
+import { User } from "@shared/interfaces/users.interface";
+import { UserRole } from "@shared/types/user.role";
 
 const userSchema: Schema = new Schema(
   {

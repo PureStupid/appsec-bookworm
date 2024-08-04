@@ -3,7 +3,7 @@ import "./App.css";
 import SignUpPage from "./pages/SignUpPage";
 import { useAuth } from "./contexts/useAuth";
 import FacultyDashboard from "./pages/FacultyDashboard";
-import { UserRole } from "./types/user.role";
+import { UserRole } from "../../shared/types/user.role";
 import LoginPage from "./pages/LoginPage";
 import StudentDashboard from "./pages/StudentDashboard";
 import ParentDashboard from "./pages/ParentDashboard";
@@ -11,8 +11,14 @@ import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
   const auth = useAuth();
+
+  if (auth.user === null) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route
@@ -21,7 +27,7 @@ function App() {
           auth.user?.role === UserRole.STUDENT ? (
             <StudentDashboard />
           ) : (
-            <Navigate to="/login" />
+            <Navigate to="/login" replace />
           )
         }
       />
@@ -31,7 +37,7 @@ function App() {
           auth.user?.role === UserRole.FACULTY ? (
             <FacultyDashboard />
           ) : (
-            <Navigate to="/login" />
+            <Navigate to="/login" replace />
           )
         }
       />
@@ -41,7 +47,7 @@ function App() {
           auth.user?.role === UserRole.PARENT ? (
             <ParentDashboard />
           ) : (
-            <Navigate to="/login" />
+            <Navigate to="/login" replace />
           )
         }
       />
@@ -51,7 +57,7 @@ function App() {
           auth.user?.role === UserRole.ADMIN ? (
             <AdminDashboard />
           ) : (
-            <Navigate to="/login" />
+            <Navigate to="/login" replace />
           )
         }
       />

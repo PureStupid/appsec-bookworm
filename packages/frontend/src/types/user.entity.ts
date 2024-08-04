@@ -1,4 +1,5 @@
-import { UserRole } from "./user.role";
+import { UserRole } from "../../../shared/types/user.role";
+import { TokenData } from "../../../shared/interfaces/auth.interface";
 
 /**
  * User login body entity
@@ -13,16 +14,24 @@ export interface UserLoginBody {
   role: UserRole;
 }
 
+export interface UserData {
+  name: string;
+  email: string;
+  role: UserRole | "";
+}
+
 /**
  * User login response entity
  * @interface
  * @property {string} message - The message of the response
+ * @property {UserData} user - The user of the response
  * @property {string} token - The token of the response
  *
  */
 export interface UserLoginResponse {
   message: string;
-  token: string;
+  user: UserData;
+  token: TokenData;
 }
 
 interface error {
@@ -60,10 +69,12 @@ export interface UserSignUpErrorResponse {
  * User sign up response entity
  * @interface
  * @property {string} message - The message of the response
+ * @property {UserData} user - The user of the response
  * @property {string} token - The token of the response
  *
  */
 export interface UserSignUpResponse {
   token: string;
+  user: UserData;
   message: string;
 }

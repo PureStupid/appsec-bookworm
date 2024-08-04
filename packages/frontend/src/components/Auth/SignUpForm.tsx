@@ -6,9 +6,13 @@ import {
   UserSignUpErrorResponse,
 } from "../../types/user.entity";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { UserRole } from "../../types/user.role";
+import { UserRole } from "../../../../shared/types/user.role";
 import { useAuth } from "../../contexts/useAuth";
 import { signup } from "../../services/authService";
+import ReCAPTCHA from "react-google-recaptcha";
+import axios from "axios";
+
+const API_URL = import.meta.env.VITE_SITE_API_URL as string;
 
 export default function SignUpForm() {
   const [formData, setFormData] = useState<UserSignUpBody>({
@@ -17,6 +21,10 @@ export default function SignUpForm() {
     password: "",
     role: UserRole.STUDENT,
   });
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const onRecaptchaChange = (token: string | null) => {
+    setRecaptchaToken(token);
+  };
   const [errors, setErrors] = useState<string[]>([]);
   const [submitDisabled, setSubmitDisabled] = useState<boolean>(false);
   const [submitText, setSubmitText] = useState<string>("Sign Up");
@@ -24,7 +32,7 @@ export default function SignUpForm() {
 
   const auth = useAuth();
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     setErrors([]);
@@ -32,17 +40,27 @@ export default function SignUpForm() {
     setSubmitText("Signing up...");
     setProcessing(true);
 
+    const response = await axios.post(`${API_URL}/validate-recaptcha`, {
+      token: recaptchaToken,
+    });
+
+    if (response.data.message !== "reCAPTCHA success") {
+      setErrors([response.data.message]);
+      setSubmitDisabled(false);
+      setProcessing(false);
+      setSubmitText("Sign Up");
+      return;
+    }
+
     signup({
       name: formData.name,
       email: formData.email,
       password: formData.password,
       role: formData.role,
     })
-      .then((response) => {
-        if (response.message === "signup success") {
-          setSubmitText("Success!");
-          auth.authenticate(formData);
-        }
+      .then(() => {
+        setSubmitText("Success!");
+        auth.authenticate();
       })
       .catch(
         (error: {
@@ -65,6 +83,7 @@ export default function SignUpForm() {
           } else {
             setErrors(["An error occurred. Please try again later."]);
           }
+          setRecaptchaToken(null);
           setSubmitDisabled(false);
         }
       );
@@ -145,6 +164,10 @@ export default function SignUpForm() {
             <option value={UserRole.ADMIN}>Admin</option>
           </Form.Control>
         </Form.Group>
+        <ReCAPTCHA
+          sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+          onChange={onRecaptchaChange}
+        />
         <ul className="list mb-3">
           <li>
             <Link to="/login" className="link ms-1">
@@ -157,7 +180,8 @@ export default function SignUpForm() {
             submitDisabled ||
             formData.password.length === 0 ||
             formData.email.length === 0 ||
-            formData.name.length === 0
+            formData.name.length === 0 ||
+            recaptchaToken === null
           }
           className="signup-btn"
           type="submit"

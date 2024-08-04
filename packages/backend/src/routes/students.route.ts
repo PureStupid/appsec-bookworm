@@ -1,8 +1,8 @@
 import { Response, Router } from "express";
 import { Routes } from "@interfaces/routes.interface";
 import authMiddleware, { checkUserRole } from "@/middlewares/auth.middleware";
-import { UserRole } from "@/interfaces/users.interface";
-import { RequestWithUser } from "@/interfaces/auth.interface";
+import { UserRole } from "@shared/types/user.role";
+import { RequestWithUser } from "@shared/interfaces/auth.interface";
 
 class StudentsRoute implements Routes {
   public path = "/student";
@@ -18,7 +18,7 @@ class StudentsRoute implements Routes {
       authMiddleware,
       checkUserRole(UserRole.STUDENT),
       (req: RequestWithUser, res: Response) => {
-        return res.send(`Hello ${req.user.name}`);
+        res.status(200).json({ message: "Student dashboard" });
       }
     );
   }

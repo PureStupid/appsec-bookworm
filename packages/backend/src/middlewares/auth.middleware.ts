@@ -2,7 +2,10 @@ import { NextFunction, Response } from "express";
 import { verify } from "jsonwebtoken";
 import { SECRET_KEY } from "@config";
 import { HttpException } from "@exceptions/HttpException";
-import { DataStoredInToken, RequestWithUser } from "@interfaces/auth.interface";
+import {
+  DataStoredInToken,
+  RequestWithUser,
+} from "@shared/interfaces/auth.interface";
 import userModel from "@models/users.model";
 import { isEmpty } from "@/utils/util";
 
