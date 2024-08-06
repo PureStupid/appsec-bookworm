@@ -66,26 +66,26 @@ class AuthRoute implements Routes {
     );
     this.router.post(
       `${this.path}login-student`,
-      validationMiddleware(UserDto, "body"),
       this.loginLimiter,
+      validationMiddleware(UserDto, "body"),
       (req, res, next) => this.authController.logIn(req, res, next)
     );
     this.router.post(
       `${this.path}login-faculty`,
-      validationMiddleware(UserDto, "body"),
       this.loginLimiter,
+      validationMiddleware(UserDto, "body"),
       (req, res, next) => this.authController.logIn(req, res, next)
     );
     this.router.post(
       `${this.path}login-parent`,
-      validationMiddleware(UserDto, "body"),
       this.loginLimiter,
+      validationMiddleware(UserDto, "body"),
       (req, res, next) => this.authController.logIn(req, res, next)
     );
     this.router.post(
       `${this.path}login-admin`,
-      validationMiddleware(UserDto, "body"),
       this.loginLimiter,
+      validationMiddleware(UserDto, "body"),
       (req, res, next) => this.authController.logIn(req, res, next)
     );
   }
